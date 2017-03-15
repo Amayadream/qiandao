@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amayadream.qiandao.core.dao.ITaskDao">
+    <resultMap id="BaseResultMap" type="com.amayadream.qiandao.core.model.Task">
+        <id column="taskName" property="taskName" jdbcType="VARCHAR"/>
+        <id column="taskGroup" property="taskGroup" jdbcType="VARCHAR"/>
+        <result column="taskCronExp" property="taskCronExp" jdbcType="VARCHAR"/>
+        <result column="taskClass" property="taskClass" jdbcType="VARCHAR"/>
+        <result column="taskData" property="taskData" jdbcType="VARCHAR"/>
+        <result column="taskStatus" property="taskStatus" jdbcType="INTEGER"/>
+        <result column="createdTime" property="createdTime" jdbcType="DATE"/>
+        <result column="successTime" property="successTime" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
+        SELECT taskName, taskGroup, taskCronExp, taskClass, taskData, taskStatus, createdTime, successTime FROM tab_task
+        WHERE taskName = #{taskName, jdbcType=VARCHAR}
+        AND taskGroup = #{taskGroup, jdbcType=VARCHAR}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT taskName, taskGroup, taskCronExp, taskClass, taskData, taskStatus, createdTime, successTime FROM tab_task
+    </select>
+
+    <insert id="insert" parameterType="com.amayadream.qiandao.core.model.Task">
+        INSERT INTO tab_task (taskName, taskGroup, taskCronExp, taskClass, taskData, taskStatus, createdTime, successTime)
+        VALUES(#{taskName, jdbcType=VARCHAR}, #{taskGroup, jdbcType=VARCHAR}, #{taskCronExp, jdbcType=VARCHAR},
+        #{taskClass, jdbcType=VARCHAR}, #{taskData, jdbcType=VARCHAR}, #{taskStatus, jdbcType=VARCHAR},
+        #{createdTime, jdbcType=DATE}, #{successTime, jdbcType=DATE})
+    </insert>
+
+    <update id="update" parameterType="com.amayadream.qiandao.core.model.Task">
+        UPDATE tab_task
+        <set>
+            <if test="taskCronExp != null and taskCronExp != ''">
+                taskCronExp = #{taskCronExp, jdbcType=VARCHAR},
+            </if>
+            <if test="taskClass != null and taskClass != ''">
+                taskClass = #{taskClass, jdbcType=VARCHAR},
+            </if>
+            <if test="taskData != null and taskData != ''">
+                taskData = #{taskData, jdbcType=VARCHAR},
+            </if>
+            <if test="successTime != null and successTime != ''">
+                successTime = #{successTime, jdbcType=DATE},
+            </if>
+            <if test="taskStatus != 0">
+                taskStatus = #{taskStatus, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE taskName = #{taskName, jdbcType=VARCHAR}
+        AND taskGroup = #{taskGroup, jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tab_task
+        WHERE taskName = #{taskName, jdbcType=VARCHAR}
+        AND taskGroup = #{taskGroup, jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

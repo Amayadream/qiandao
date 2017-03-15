@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amayadream.qiandao.core.dao.IWebsiteDao">
+    <resultMap id="BaseResultMap" type="com.amayadream.qiandao.core.model.Website">
+        <id column="webId" property="webId" jdbcType="VARCHAR"/>
+        <result column="webUrl" property="webUrl" jdbcType="VARCHAR"/>
+        <result column="webName" property="webName" jdbcType="VARCHAR"/>
+        <result column="webDesc" property="webDesc" jdbcType="VARCHAR"/>
+        <result column="className" property="className" jdbcType="VARCHAR"/>
+        <result column="webParams" property="webParams" jdbcType="VARCHAR"/>
+        <result column="createdTime" property="createdTime" jdbcType="DATE"/>
+        <result column="updatedTime" property="updatedTime" jdbcType="DATE"/>
+        <result column="successTime" property="successTime" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
+        SELECT webId, webUrl, webName, webDesc, className, webParams, createdTime, updatedTime, successTime FROM tab_website
+        WHERE webId = #{webId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        SELECT webId, webUrl, webName, webDesc, className, webParams, createdTime, updatedTime, successTime FROM tab_website
+    </select>
+
+    <insert id="insert" parameterType="com.amayadream.qiandao.core.model.Website">
+        INSERT INTO tab_website (webId, webUrl, webName, webDesc, className, webParams, createdTime, updatedTime, successTime)
+        VALUES(#{webId, jdbcType=VARCHAR}, #{webUrl, jdbcType=VARCHAR}, #{webName, jdbcType=VARCHAR},
+        #{webDesc, jdbcType=VARCHAR}, #{className, jdbcType=VARCHAR}, #{webParams, jdbcType=VARCHAR},
+        #{createdTime, jdbcType=DATE}, #{updatedTime, jdbcType=DATE},#{successTime, jdbcType=DATE})
+    </insert>
+
+    <update id="update" parameterType="com.amayadream.qiandao.core.model.Website">
+        UPDATE tab_website
+        <set>
+            <if test="webUrl != null and webUrl != ''">
+                webUrl = #{webUrl, jdbcType=VARCHAR},
+            </if>
+            <if test="webName != null and webName != ''">
+                webName = #{webName, jdbcType=VARCHAR},
+            </if>
+            <if test="webDesc != null and webDesc != ''">
+                webDesc = #{webDesc, jdbcType=VARCHAR},
+            </if>
+            <if test="className != null and className != ''">
+                className = #{className, jdbcType=VARCHAR},
+            </if>
+            <if test="webParams != null and webParams != ''">
+                webParams = #{webParams, jdbcType=VARCHAR},
+            </if>
+            <if test="createdTime != null">
+                createdTime = #{createdTime, jdbcType=DATE},
+            </if>
+            <if test="updatedTime != null">
+                updatedTime = #{updatedTime, jdbcType=DATE},
+            </if>
+            <if test="successTime != null">
+                successTime = #{successTime, jdbcType=DATE}
+            </if>
+        </set>
+        WHERE webId = #{webId, jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tab_website
+        <where>
+            webId in
+            <foreach collection="webIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+</mapper>
