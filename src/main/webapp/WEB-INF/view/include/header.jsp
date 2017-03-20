@@ -7,7 +7,3 @@
 <script src="${ctx}/static/plugins/layer/layer.js"></script>
 <script src="${ctx}/static/plugins/jquery/jquery.validate.js"></script>
 <script src="${ctx}/static/plugins/jquery/jquery.validate.message_zhCN.js"></script>
-<!--[if lt IE 9]>
-<script src="${ctx}/static/plugins/ie/html5shiv.min.js"></script>
-<script src="${ctx}/static/plugins/ie/respond.min.js"></script>
-<![endif]-->
