@@ -36,7 +36,7 @@ public class AuthController {
      * 登录
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String userId, String password, HttpSession session, RedirectAttributes attributes) {
+    public String login(String email, String password, HttpSession session, RedirectAttributes attributes) {
 
         return "redirect:/auth/login";
     }
@@ -45,7 +45,7 @@ public class AuthController {
      * 注册
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(String userId, String password, RedirectAttributes attributes) {
+    public String register(String email, String password, RedirectAttributes attributes) {
 
         return "redirect:/auth/login";
     }

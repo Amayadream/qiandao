@@ -6,8 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-    <title>登录 | 叮叮签到</title>
-    <jsp:include page="../include/header.jsp"/>
+    <title>首页 | 叮叮签到</title>
+    <jsp:include page="include/header.jsp"/>
 </head>
 <body>
 
@@ -42,18 +42,21 @@
     </div>
 </nav>
 
-<div class="col-lg-4 col-lg-offset-4">
-    <form action="${ctx}/auth/login" method="post">
+<div class="col-lg-2 col-lg-offset-5">
+    <h1 style="text-align: center">签到<sup>alpha</sup></h1>
+    <form>
         <div class="form-group">
-            <label for="email">邮箱</label>
-            <input type="email" class="form-control" id="email" placeholder="请输入邮箱地址...">
+            <label for="webId">Email address</label>
+            <select class="form-control" name="webId" id="webId">
+                <option>V2ex</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" placeholder="请输入密码...">
+            <label for="exampleInputPassword1">Cookies</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-success">登录</button>
-        <button type="button" class="btn btn-default">忘记密码?</button>
+        <button type="submit" class="btn btn-default">立即签到</button>
+        <button type="button" class="btn btn-default">创建任务</button>
     </form>
 </div>
 
