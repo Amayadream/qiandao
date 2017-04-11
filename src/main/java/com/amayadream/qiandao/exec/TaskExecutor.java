@@ -1,5 +1,7 @@
 package com.amayadream.qiandao.exec;
 
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -10,30 +12,114 @@ import java.util.concurrent.Executors;
 public class TaskExecutor {
 
     public static void main(String[] args) {
-//        ExecutorService pool = Executors.newSingleThreadExecutor();
-//        ExecutorService pool = Executors.newFixedThreadPool(2);
-        ExecutorService pool = Executors.newCachedThreadPool();
-        Thread t1 = new MyThread();
-        Thread t2 = new MyThread();
-        Thread t3 = new MyThread();
-        Thread t4 = new MyThread();
-        Thread t5 = new MyThread();
-        //将线程放入线程池中执行
-        pool.execute(t1);
-        pool.execute(t2);
-        pool.execute(t3);
-        pool.execute(t4);
-        pool.execute(t5);
-        //关闭线程池
-        pool.shutdown();
+        Storage storage = new Storage();
+        Producer p1 = new Producer(storage);
+        Producer p2 = new Producer(storage);
+        Consumer c1 = new Consumer(storage);
+//        Consumer c2 = new Consumer(storage);
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.execute(p1);
+        executor.execute(c1);
+        executor.execute(p2);
+//        executor.execute(c2);
     }
 
-    static class MyThread extends Thread {
+    static class Storage {
+
+        private final Integer MAX_LENGTH = 100;
+        private LinkedList<Integer> list = new LinkedList<Integer>();
+
+        public void produce() {
+            synchronized (list) {
+                while (list.size() >= MAX_LENGTH) {
+                    try {
+                        System.out.println("当前库存" + list.size() + ", 生产者休眠!");
+                        list.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                list.add(new Random(10).nextInt());
+                System.out.println("生产者生产了一个产品, 当前库存" + list.size());
+                list.notifyAll();
+            }
+        }
+
+        public void consume() {
+            synchronized (list) {
+                while (list.size() == 0) {
+                    try {
+                        System.out.println("当前库存" + list.size() + ", 消费者休眠!");
+                        list.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                list.remove();
+                System.out.println("消费者消费了一个产品, 当前库存" + list.size());
+                list.notifyAll();
+            }
+        }
+
+    }
+
+    static class Producer implements Runnable {
+
+        private Storage storage;
+
+        public Producer(Storage storage) {
+            this.storage = storage;
+        }
 
         @Override
         public void run() {
-            System.out.println(Thread.currentThread().getName() + "正在执行...");
+            while (true) {
+                try {
+                    storage.produce();
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public Storage getStorage() {
+            return storage;
+        }
+
+        public void setStorage(Storage storage) {
+            this.storage = storage;
         }
     }
+
+    static class Consumer implements Runnable {
+
+        private Storage storage;
+
+        public Consumer(Storage storage) {
+            this.storage = storage;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    storage.consume();
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public Storage getStorage() {
+            return storage;
+        }
+
+        public void setStorage(Storage storage) {
+            this.storage = storage;
+        }
+    }
+
 
 }
