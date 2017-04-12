@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @date :  2017.03.15 18:22
  */
 @Component
-public class SrpingListener implements ApplicationListener<ContextRefreshedEvent> {
+public class SpringListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
