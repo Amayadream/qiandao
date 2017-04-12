@@ -1,8 +1,7 @@
 package com.amayadream.qiandao.web.controller;
 
-import com.amayadream.qiandao.common.ResultCode;
+import com.amayadream.qiandao.common.ResultConstant;
 import com.amayadream.qiandao.common.ResultEntity;
-import com.amayadream.qiandao.common.ResultMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,7 @@ public class SignController {
     @RequestMapping(value = "/{webId}")
     @ResponseBody
     public ResultEntity sign(@PathVariable String webId) {
-        return ResultEntity.buildOkResult(ResultCode.SUCCESS, ResultMessage.SUCCESS);
+        return ResultEntity.buildOkResult(ResultConstant.NOT_LOGIN);
     }
 
 }

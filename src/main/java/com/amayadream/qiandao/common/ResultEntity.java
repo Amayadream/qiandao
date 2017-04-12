@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 返回值实体
  * @author :  Amayadream
  * @date :  2017.04.12 21:13
  */
 public class ResultEntity {
 
+    /** 状态码 */
     private Integer code;
+    /** 信息 */
     private String message;
+    /** 时间戳 */
     private Date timestamp;
+    /** 数据 */
     private Serializable data;
 
     private ResultEntity(Integer code, String message, Date timestamp, Serializable data) {
@@ -21,20 +26,20 @@ public class ResultEntity {
         this.data = data;
     }
 
-    public static ResultEntity buildOkResult(Integer code, String message) {
-        return new ResultEntity(code, message, new Date(), null);
+    public static ResultEntity buildOkResult(ResultConstant c) {
+        return new ResultEntity(c.getCode(), c.getMessage(), new Date(), null);
     }
 
-    public static ResultEntity buildOkResult(Integer code, String message, Serializable data) {
-        return new ResultEntity(code, message, new Date(), data);
+    public static ResultEntity buildOkResult(ResultConstant c, Serializable data) {
+        return new ResultEntity(c.getCode(), c.getMessage(), new Date(), data);
     }
 
-    public static ResultEntity buildNokResult(Integer code, String message) {
-        return new ResultEntity(code, message, new Date(), null);
+    public static ResultEntity buildNokResult(ResultConstant c) {
+        return new ResultEntity(c.getCode(), c.getMessage(), new Date(), null);
     }
 
-    public static ResultEntity buildNokResult(Integer code, String message, Serializable data) {
-        return new ResultEntity(code, message, new Date(), data);
+    public static ResultEntity buildNokResult(ResultConstant c, Serializable data) {
+        return new ResultEntity(c.getCode(), c.getMessage(), new Date(), data);
     }
 
     public Integer getCode() {
