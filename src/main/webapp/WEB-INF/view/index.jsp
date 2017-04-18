@@ -24,19 +24,23 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${ctx}/auth/login">登录</a></li>
-                <li><a href="${ctx}/auth/register">注册</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Amayadream <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> 签到任务</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
-                    </ul>
-                </li>
+                <c:if test="${isLogin == true}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            ${user.email} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> 签到任务</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" onclick="window.location = '${ctx}/auth/logout'"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+                <c:if test="${empty isLogin}">
+                    <li><a href="${ctx}/auth/login">登录</a></li>
+                    <li><a href="${ctx}/auth/register">注册</a></li>
+                </c:if>
             </ul>
         </div>
     </div>

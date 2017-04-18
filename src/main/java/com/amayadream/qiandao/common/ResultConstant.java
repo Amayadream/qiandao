@@ -9,6 +9,7 @@ public enum ResultConstant {
 
     SUCCESS(0, "OK")
     ,NOT_LOGIN(-1, "未登录")
+
     ;
 
     private Integer code;

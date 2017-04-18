@@ -24,38 +24,53 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="${ctx}/auth/login">登录</a></li>
-                <li><a href="${ctx}/auth/register">注册</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Amayadream <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> 签到任务</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
-                    </ul>
-                </li>
+                <c:if test="${isLogin == true}">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                ${user.email} <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> 个人中心</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> 签到任务</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" onclick="window.location = '${ctx}/auth/logout'"><span class="glyphicon glyphicon-off"></span> 退出</a></li>
+                        </ul>
+                    </li>
+                </c:if>
+                <c:if test="${empty isLogin}">
+                    <li><a href="${ctx}/auth/login">登录</a></li>
+                    <li><a href="${ctx}/auth/register">注册</a></li>
+                </c:if>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="col-lg-4 col-lg-offset-4">
+    <h1>用户登陆</h1>
     <form action="${ctx}/auth/login" method="post">
         <div class="form-group">
             <label for="email">邮箱</label>
-            <input type="email" class="form-control" id="email" placeholder="请输入邮箱地址...">
+            <input type="email" class="form-control" id="email" name="email" placeholder="请输入邮箱地址...">
         </div>
         <div class="form-group">
             <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" placeholder="请输入密码...">
+            <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码...">
         </div>
         <button type="submit" class="btn btn-success">登录</button>
-        <button type="button" class="btn btn-default">忘记密码?</button>
+        <button type="button" class="btn btn-default" onclick="window.location = '${ctx}/auth/register'">没有账号?</button>
     </form>
 </div>
 
+<script>
+    $(function(){
+        if("${message}"){
+            layer.msg('${message}', { offset: 0 });
+        }
+        if("${error}"){
+            layer.msg('${error}', { offset: 0, shift: 6 });
+        }
+    });
+</script>
 </body>
 </html>

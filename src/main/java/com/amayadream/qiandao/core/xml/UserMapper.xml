@@ -5,13 +5,14 @@
         <id column="email" property="email" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
         <result column="createdTime" property="createdTime" jdbcType="DATE"/>
         <result column="lastLoginTime" property="lastLoginTime" jdbcType="DATE"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="string">
-        SELECT email, password, salt, createdTime, lastLoginTime, status FROM tab_user
+        SELECT email, password, salt, role, createdTime, lastLoginTime, status FROM tab_user
         WHERE email = #{email, jdbcType=VARCHAR}
     </select>
 
@@ -20,8 +21,8 @@
     </select>
 
     <insert id="insert" parameterType="com.amayadream.qiandao.core.model.User">
-        INSERT INTO tab_user (email, password, salt, createdTime, lastLoginTime, status)
-        VALUES(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR},
+        INSERT INTO tab_user (email, password, salt, role, createdTime, lastLoginTime, status)
+        VALUES(#{email, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR}, #{salt, jdbcType=VARCHAR}, #{role, jdbcType=VARCHAR},
         #{createdTime, jdbcType=DATE}, #{lastLoginTime, jdbcType=DATE}, #{status, jdbcType=INTEGER})
     </insert>
 
@@ -36,6 +37,9 @@
             </if>
             <if test="lastLoginTime != null">
                 lastLoginTime = #{lastLoginTime, jdbcType=DATE},
+            </if>
+            <if test="role != null">
+                role = #{role, jdbcType=VARCHAR},
             </if>
             <if test="status != 0">
                 status = #{status, jdbcType=INTEGER}

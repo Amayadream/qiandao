@@ -18,7 +18,7 @@ public class SignController {
     @RequestMapping(value = "/{webId}")
     @ResponseBody
     public ResultEntity sign(@PathVariable String webId) {
-        return ResultEntity.buildOkResult(ResultConstant.NOT_LOGIN);
+        return ResultEntity.buildNokResult(ResultConstant.NOT_LOGIN);
     }
 
 }
