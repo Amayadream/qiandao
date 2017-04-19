@@ -56,8 +56,12 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Cookies</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="username">username</label>
+            <input type="text" class="form-control" id="username" placeholder="username">
+        </div>
+        <div class="form-group">
+            <label for="password">password</label>
+            <input type="text" class="form-control" id="password" placeholder="password">
         </div>
         <button type="submit" class="btn btn-default">立即签到</button>
         <button type="button" class="btn btn-default">创建任务</button>

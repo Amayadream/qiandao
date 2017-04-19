@@ -1,6 +1,7 @@
 package com.amayadream.qiandao.exec;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amayadream.qiandao.exec.exception.ParamsNotMatchException;
 
 /**
  * 基础签到插件接口
@@ -11,7 +12,7 @@ public interface BaseSignHandler {
 
     void before();
 
-    void sign(JSONObject object);
+    void sign(JSONObject object) throws ParamsNotMatchException;
 
     void after();
 
